@@ -1,6 +1,6 @@
-const database = require('./database');
+import { database } from "./database.js";
 
-const getUsers = (req, res) => {
+export const getUsers = (req, res) => {
   const initialSql = "select * from users";
   const where = [];
 
@@ -33,7 +33,7 @@ const getUsers = (req, res) => {
   });
 };
 
-const getUsersById = (req, res) => {
+export const getUsersById = (req, res) => {
   const id = parseInt(req.params.id);
 
   database
@@ -49,10 +49,4 @@ const getUsersById = (req, res) => {
       console.error(err);
       res.status(500).send("Error retrieving data from database");
     });
-};
-
-
-module.exports = {
-  getUsers,
-  getUsersById,
 };

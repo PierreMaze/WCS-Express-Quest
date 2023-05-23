@@ -1,5 +1,6 @@
 import express from "express";
 import {getMovies, getMovieById} from "./movieHandlers.js";
+import {getUsers, getUsersById} from "./userHandlers.js"
 
 const app = express();
 const port = process.env.APP_PORT ?? 5000;
@@ -14,6 +15,9 @@ app.get("/", welcome);
 
 app.get("/api/movies", getMovies);
 app.get("/api/movies/:id", getMovieById);
+
+app.get("/api/users", getUsers);
+app.get("/api/users/:id", getUsersById);
 
 app.listen(port, (err) => {
   if (err) {
