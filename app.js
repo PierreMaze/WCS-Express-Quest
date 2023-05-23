@@ -1,9 +1,11 @@
 import express from "express";
-import {getMovies, getMovieById} from "./movieHandlers.js";
+import {getMovies, getMovieById, postMovie} from "./movieHandlers.js";
+import {getUsers, getUsersById, postUser} from "./userHandlers.js"
 
 const app = express();
-
 const port = process.env.APP_PORT ?? 5000;
+
+app.use(express.json());
 
 const welcome = (req, res) => {
   res.send("Welcome to my favourite movie list");
@@ -13,6 +15,13 @@ app.get("/", welcome);
 
 app.get("/api/movies", getMovies);
 app.get("/api/movies/:id", getMovieById);
+
+app.post("/api/movies", postMovie);
+
+app.get("/api/users", getUsers);
+app.get("/api/users/:id", getUsersById);
+
+app.post("/api/users", postUser);
 
 app.listen(port, (err) => {
   if (err) {
