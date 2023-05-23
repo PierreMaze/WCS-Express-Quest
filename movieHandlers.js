@@ -1,29 +1,35 @@
-const database = require('./database');
+import { database } from "./database.js";
 
-const getMovies = (req, res) => {
-  const initialSql = "select * from movies";
-  const where = [];
+const movies = [
+  {
+    id: 1,
+    title: "Citizen Kane",
+    director: "Orson Wells",
+    year: "1941",
+    colors: false,
+    duration: 120,
+  },
+  {
+    id: 2,
+    title: "The Godfather",
+    director: "Francis Ford Coppola",
+    year: "1972",
+    colors: true,
+    duration: 180,
+  },
+  {
+    id: 3,
+    title: "Pulp Fiction",
+    director: "Quentin Tarantino",
+    year: "1994",
+    color: true,
+    duration: 180,
+  },
+];
 
-  if (req.query.color != null) {
-    where.push({
-      column: "color",
-      value: req.query.color,
-      operator: "=",
-    });
-  }
-  if (req.query.max_duration != null) {
-    where.push({
-      column: "duration",
-      value: req.query.max_duration,
-      operator: "<=",
-    });
-  }
-
+export const getMovies = (req, res) => {
   database
-    .query(
-      where.reduce((sql, { column, operator }, index) => `${sql} ${index === 0 ? "where" : "and"} ${column} ${operator} ?`,initialSql),
-      where.map(({ value }) => value)
-    )
+    .query("select * from movies")
     .then(([movies]) => {
       res.json(movies);
     })
@@ -33,9 +39,7 @@ const getMovies = (req, res) => {
     });
 };
 
-
-
-const getMovieById = (req, res) => {
+export const getMovieById = (req, res) => {
   const id = parseInt(req.params.id);
 
   database
@@ -52,7 +56,4 @@ const getMovieById = (req, res) => {
       res.status(500).send("Error retrieving data from database");
     });
 };
-module.exports = {
-  getMovies,
-  getMovieById,
-};
+
