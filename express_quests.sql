@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS movies;
-
 CREATE TABLE movies (
   id int primary key NOT NULL AUTO_INCREMENT,
   title varchar(255) NOT NULL,
@@ -54,8 +52,6 @@ VALUES
     '1',
     150
   );
-
-DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id int primary key NOT NULL AUTO_INCREMENT,
