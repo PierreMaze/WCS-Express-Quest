@@ -33,6 +33,7 @@ export const getUsers = (req, res) => {
   });
 };
 
+
 export const getUsersById = (req, res) => {
   const id = parseInt(req.params.id);
 
