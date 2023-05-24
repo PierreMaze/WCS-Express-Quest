@@ -1,6 +1,6 @@
 import express from "express";
-import {getMovies, getMovieById, postMovie, updateMovie} from "./movieHandlers.js";
-import {getUsers, getUsersById, postUser, updateUser} from "./userHandlers.js";
+import {getMovies, getMovieById, postMovie, updateMovie, deleteMovie} from "./movieHandlers.js";
+import {getUsers, getUsersById, postUser, updateUser, deleteUser} from "./userHandlers.js";
 import { validateMovie, validateUser } from "./validators.js";
 
 const app = express();
@@ -24,6 +24,9 @@ app.post('/api/users', validateUser, postUser);
 
 app.put('/api/movies/:id', validateMovie, updateMovie);
 app.put('/api/users/:id', validateUser, updateUser);
+
+app.delete("/api/movies/:id", deleteMovie);
+app.delete("/api/movies/:id", deleteUser);
 
 app.listen(port, (err) => {
   if (err) {
