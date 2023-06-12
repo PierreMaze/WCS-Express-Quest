@@ -20,9 +20,12 @@ const getUsers = (req, res) => {
     });  
   }
 
-  database.query(
-    where.reduce((sql, {column, operator}, index) => `${sql} ${index === 0 ? "where" : "and"} ${column} ${operator} ?`, initialSql),
-    where.map(({value}) => value)
+  database
+  .query(
+    where.reduce(
+      (sql, {column, operator}, index) => `${sql} ${index === 0 ? "where" : "and"} ${column} ${operator} ?`, initialSql),
+    where.map(
+      ({value}) => value)
   )
   .then(([result]) => {
     res.json(result)
@@ -72,18 +75,20 @@ const postUser = (req, res) => {
 const updateUser = (req, res) => {
   const id = parseInt(req.params.id);
   const {firstname, lastname, email, city, language} = req.body
-  database.query(`UPDATE users SET firstname = ?, lastname = ?, email = ?, city = ?, language = ? WHERE id = ?`, [firstname, lastname, email, city, language, id])
-  .then(([result]) => {
-    if(result.affectedRows === 0){
-      res.status(404).send("Not Found");
-    }else{
-      res.sendStatus(204);
-    }
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).send("Error editing user");
-  })
+  
+  database
+    .query(`UPDATE users SET firstname = ?, lastname = ?, email = ?, city = ?, language = ? WHERE id = ?`, [firstname, lastname, email, city, language, id])
+    .then(([result]) => {
+      if(result.affectedRows === 0){
+        res.status(404).send("Not Found");
+      }else{
+        res.sendStatus(204);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error editing user");
+    })
 };
 
 const deleteUser = (req, res) => {

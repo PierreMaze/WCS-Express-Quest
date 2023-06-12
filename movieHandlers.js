@@ -21,16 +21,20 @@ const getMovies = (req, res) => {
 
   database
   .query(
-    where.reduce((sql, { column, operator }, index) => `${sql} ${index === 0 ? "where" : "and"} ${column} ${operator} ?`,initialSql),
-    where.map(({ value }) => value)
+    where.reduce(
+      (sql, { column, operator }, index) => 
+        `${sql} ${index === 0 ? "where" : "and"} ${column} ${operator} ?`
+        ,initialSql),
+    where.map(
+      ({ value }) => value)
   )
-    .then(([movies]) => {
-      res.json(movies);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error retrieving data from database");
-    });
+  .then(([movies]) => {
+    res.json(movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error retrieving data from database");
+  })
 };
 
 const getMovieById = (req, res) => {
@@ -71,18 +75,23 @@ const postMovie = (req, res) => {
 const updateMovie = (req, res) => {
   const id = parseInt(req.params.id);
   const { title, director, year, color, duration } = req.body;
-  database.query(`UPDATE movies SET title = ?, director = ?, year = ?, color = ?, duration = ?  WHERE id = ?`, [title, director, year, color, duration, id])
-  .then(([result]) => {
-    if (result.affectedRows === 0) {
-      res.status(404).send("Not Found");
-    } else {
-      res.sendStatus(204);
-    }
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).send("Error editing movie");
-  })
+ 
+  database
+    .query(
+      `UPDATE movies SET title = ?, director = ?, year = ?, color = ?, duration = ?  WHERE id = ?`,
+      [title, director, year, color, duration, id])
+    .then(
+      ([result]) => {
+        if (result.affectedRows === 0) {
+          res.status(404).send("Not Found");
+        } else {
+          res.sendStatus(204);
+        }
+      })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error editing movie");
+    })
 };
 
 const deleteMovie = (req, res) => {
