@@ -1,6 +1,6 @@
-const { body, validationResult } = require("./express-validator");
+const { body, validationResult } = require('./express-validator');
 
-const validateMovie = [
+const { validateMovie } = [
     body("title").notEmpty().isLength({ max: 255 }).isString(),
     body("director").notEmpty().isLength({ max: 255 }).isString(),
     body("year").notEmpty().isLength({ max: 255 }).isString(),
@@ -17,7 +17,7 @@ const validateMovie = [
     },
 ];
   
-const validateUser = [
+const { validateUser } = [
     body("email").isEmail(),
     body("firstname").isLength({ max: 255 }).isString(),
     body("lastname").isLength({ max: 255 }).isString(),
