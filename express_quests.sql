@@ -1,3 +1,14 @@
+DROP TABLE IF EXISTS movies;
+
+CREATE TABLE movies (
+  id int primary key NOT NULL AUTO_INCREMENT,
+  title varchar(255) NOT NULL,
+  director varchar(255) NOT NULL,
+  year varchar(255) NOT NULL,
+  color varchar(255) NOT NULL,
+  duration int NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb3;
+
 INSERT INTO
   movies (title, director, year, color, duration)
 VALUES
@@ -53,11 +64,11 @@ CREATE TABLE users (
     email varchar(255) UNIQUE NOT NULL,
     city varchar(255) DEFAULT NULL,
     language varchar(255) DEFAULT NULL,
-    password varchar(255) NOT NULL
+    hashedPassword varchar(255) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 INSERT INTO
-  users (firstname, lastname, email, city, language, password)
+  users (firstname, lastname, email, city, language, hashedPassword)
 VALUES
   (
     'John',
