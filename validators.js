@@ -1,6 +1,6 @@
-import { body, validationResult } from "express-validator";
+const { body, validationResult } = require("./express-validator");
 
-export const validateMovie = [
+const validateMovie = [
     body("title").notEmpty().isLength({ max: 255 }).isString(),
     body("director").notEmpty().isLength({ max: 255 }).isString(),
     body("year").notEmpty().isLength({ max: 255 }).isString(),
@@ -17,7 +17,7 @@ export const validateMovie = [
     },
 ];
   
-export const validateUser = [
+const validateUser = [
     body("email").isEmail(),
     body("firstname").isLength({ max: 255 }).isString(),
     body("lastname").isLength({ max: 255 }).isString(),
@@ -31,3 +31,8 @@ export const validateUser = [
         }
     },
 ];
+
+module.exports = {
+  validateMovie,
+  validateUser,
+};

@@ -1,33 +1,6 @@
-import { database } from "./database.js";
+const database = require("./database");
 
-// const movies = [
-//   {
-//     id: 1,
-//     title: "Citizen Kane",
-//     director: "Orson Wells",
-//     year: "1941",
-//     colors: false,
-//     duration: 120,
-//   },
-//   {
-//     id: 2,
-//     title: "The Godfather",
-//     director: "Francis Ford Coppola",
-//     year: "1972",
-//     colors: true,
-//     duration: 180,
-//   },
-//   {
-//     id: 3,
-//     title: "Pulp Fiction",
-//     director: "Quentin Tarantino",
-//     year: "1994",
-//     color: true,
-//     duration: 180,
-//   },
-// ];
-
-export const getMovies = (req, res) => {
+const getMovies = (req, res) => {
   const initialSql = "select * from movies";
   const where = [];
 
@@ -60,7 +33,7 @@ export const getMovies = (req, res) => {
     });
 };
 
-export const getMovieById = (req, res) => {
+const getMovieById = (req, res) => {
   const id = parseInt(req.params.id);
 
   database
@@ -78,7 +51,7 @@ export const getMovieById = (req, res) => {
     });
 };
 
-export const postMovie = (req, res) => {
+const postMovie = (req, res) => {
   const { title, director, year, color, duration } = req.body;
 
   database
@@ -95,7 +68,7 @@ export const postMovie = (req, res) => {
     });
 };
 
-export const updateMovie = (req, res) => {
+const updateMovie = (req, res) => {
   const id = parseInt(req.params.id);
   const { title, director, year, color, duration } = req.body;
   database.query(`UPDATE movies SET title = ?, director = ?, year = ?, color = ?, duration = ?  WHERE id = ?`, [title, director, year, color, duration, id])
@@ -112,7 +85,7 @@ export const updateMovie = (req, res) => {
   })
 };
 
-export const deleteMovie = (req, res) => {
+const deleteMovie = (req, res) => {
   const id = parseInt(req.params.id);
 
   database
@@ -128,4 +101,12 @@ export const deleteMovie = (req, res) => {
       console.error(err);
       res.status(500).send("Error deleting the movie");
     });
+};
+
+module.exports = {
+  getMovies,
+  getMovieById,
+  postMovie,
+  updateMovie,
+  deleteMovie,
 };

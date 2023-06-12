@@ -1,6 +1,6 @@
-import { database } from "./database.js";
+const database = require("./database");
 
-export const getUsers = (req, res) => {
+const getUsers = (req, res) => {
   const initialSql = "select * from users";
   const where = [];
 
@@ -34,7 +34,7 @@ export const getUsers = (req, res) => {
 };
 
 
-export const getUsersById = (req, res) => {
+const getUsersById = (req, res) => {
   const id = parseInt(req.params.id);
 
   database
@@ -52,7 +52,7 @@ export const getUsersById = (req, res) => {
     });
 };
 
-export const postUser = (req, res) => {
+const postUser = (req, res) => {
   const { firstname, lastname, email, city } = req.body;
 
   database
@@ -69,7 +69,7 @@ export const postUser = (req, res) => {
     });
 };
 
-export const updateUser = (req, res) => {
+const updateUser = (req, res) => {
   const id = parseInt(req.params.id);
   const {firstname, lastname, email, city, language} = req.body
   database.query(`UPDATE users SET firstname = ?, lastname = ?, email = ?, city = ?, language = ? WHERE id = ?`, [firstname, lastname, email, city, language, id])
@@ -86,7 +86,7 @@ export const updateUser = (req, res) => {
   })
 };
 
-export const deleteUser = (req, res) => {
+const deleteUser = (req, res) => {
   const id = parseInt(req.params.id);
   database.query("delete from users where id = ?", [id])
   .then(([result]) => {
@@ -100,4 +100,12 @@ export const deleteUser = (req, res) => {
     console.error(err);
     res.status(500).send("Error deleting the user");
   })
+};
+
+module.exports = {
+  getUsers,
+  getUsersById,
+  postUser,
+  updateUser,
+  deleteUser,
 };

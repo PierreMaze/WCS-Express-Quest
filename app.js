@@ -1,12 +1,12 @@
-import express from "express";
-import {getMovies, getMovieById, postMovie, updateMovie, deleteMovie} from "./movieHandlers.js";
-import {getUsers, getUsersById, postUser, updateUser, deleteUser} from "./userHandlers.js";
-import { validateMovie, validateUser } from "./validators.js";
+require("dotenv").config();
+
+const express = require("express");
 
 const app = express();
-const port = process.env.APP_PORT ?? 5000;
 
 app.use(express.json());
+
+const port = process.env.APP_PORT ?? 5000;
 
 const welcome = (req, res) => {
   res.send("Welcome to my favourite movie list");
@@ -14,19 +14,21 @@ const welcome = (req, res) => {
 
 app.get("/", welcome);
 
-app.get("/api/movies", getMovies);
-app.get("/api/movies/:id", getMovieById);
-app.get("/api/users", getUsers);
-app.get("/api/users/:id", getUsersById);
+const movieHandlers = require("./movieHandlers");
 
-app.post('/api/movies', validateMovie, postMovie);
-app.post('/api/users', validateUser, postUser);
+app.get("/api/movies", movieHandlers.getMovies);
+app.get("/api/movies/:id", movieHandlers.getMovieById);
+app.post("/api/movies", movieHandlers.postMovie);
+app.put("/api/movies/:id", movieHandlers.updateMovie);
+app.delete("/api/movies/:id", movieHandlers.deleteMovie);
 
-app.put('/api/movies/:id', validateMovie, updateMovie);
-app.put('/api/users/:id', validateUser, updateUser);
+const userHandlers = require("./userHandlers");
 
-app.delete("/api/movies/:id", deleteMovie);
-app.delete("/api/movies/:id", deleteUser);
+app.get("/api/users", userHandlers.getUsers);
+app.get("/api/users/:id", userHandlers.getUsersById);
+app.post("/api/users", userHandlers.postUser);
+app.put("/api/users/:id", userHandlers.updateUser);
+app.delete("/api/users/:id", userHandlers.deleteUser);
 
 app.listen(port, (err) => {
   if (err) {
